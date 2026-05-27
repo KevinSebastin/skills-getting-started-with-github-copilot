@@ -4,6 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
   function showMessage(text, type) {
     messageDiv.textContent = text;
     messageDiv.className = type;
@@ -45,13 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
               .map(
                 (participant) => `
                   <li class="participant-item">
-                    <span class="participant-email">${participant}</span>
+                    <span class="participant-email">${escapeHtml(participant)}</span>
                     <button
                       type="button"
                       class="participant-remove-btn"
                       data-activity="${encodeURIComponent(name)}"
                       data-email="${encodeURIComponent(participant)}"
-                      aria-label="Remove ${participant} from ${name}"
+                      aria-label="Remove ${escapeHtml(participant)} from ${escapeHtml(name)}"
                       title="Unregister participant"
                     >
                       🗑️
